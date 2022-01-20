@@ -3,6 +3,7 @@ const Axios = require('axios');
 
 var routes = {
   getReviews: (req, res) => {
+    console.log('hit');
     let {page, count, sort, product_id} = req.query;
     let response = {"product": product_id, "page": page || 0, "count": count || 5, "results":[]};
     let products;
