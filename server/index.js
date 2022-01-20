@@ -4,13 +4,16 @@ const routes = require('./routes.js');
 
 var app = express();
 
-app.use(express.json());
-app.use('/', express.static(path.join(__dirname, '../client/dist')));
-
-app.get('/reviews', routes.get);
-app.post('/api/groceries', routes.post);
-app.put('/api/groceries', routes.put);
-app.delete('/api/groceries', routes.delete);
+app.get('/reviews', routes.getReviews);
+app.get('/reviews/meta', routes.getMetaData)
+app.post('/reviews', routes.post);
+app.put('/reviews/*', (req, res) => {
+  if (req.url.includes('helpful')) {
+    routes.helpful(req, res);
+  } else {
+    routes.report(req, res);
+  }
+});
 
 app.listen(3000, (err) => {
   if (err) {
